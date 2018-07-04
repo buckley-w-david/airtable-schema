@@ -1,6 +1,17 @@
 version: '3'
 services:
-  airtable:
-    build: .
   selenium:
     image: "selenium/standalone-firefox:3.12.0-cobalt"
+    volumes:
+    - /dev/shm:/dev/shm
+    ports:
+     - "4444:4444"
+  airtable:
+    build: .
+    environment:
+    - AIRTABLE_USER=buckley.w.david@gmail.com
+    - AIRTABLE_PASSWORD=^NDa9!n2mwFmG@
+    - APP_ID=appubWURqWIfSEKWX
+    - REMOTE_DRIVER_HOST=http://driver:4444/wd/hub
+    links:
+      - "selenium:driver"

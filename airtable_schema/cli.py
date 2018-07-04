@@ -31,25 +31,13 @@ def main(
 @main.command()
 @click.option("--app-id", required=True, envvar="APP_ID", help="App ID for workspace")
 @click.option(
-    "--remote-driver/--no-remove-driver",
-    envvar="REMOTE_DRIVER",
-    default=True,
-    help="Flag to signal to use a remote selenium host",
-)
-@click.option(
     "--remote-driver-address",
     envvar="REMOTE_DRIVER_HOST",
-    default="http://127.0.0.1:4444/wd/hub",
     help="Remote selenium host",
 )
 @click.pass_context
-def schema(
-    ctx: click.core.Context,
-    app_id: str,
-    remote_driver: bool,
-    remote_driver_address: str,
-) -> None:
-    if remote_driver:
+def schema(ctx: click.core.Context, app_id: str, remote_driver_address: str) -> None:
+    if remote_driver_address:
         driver = webdriver.Remote(
             command_executor=remote_driver_address,
             desired_capabilities=DesiredCapabilities.FIREFOX,
