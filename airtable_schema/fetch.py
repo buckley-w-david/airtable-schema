@@ -78,7 +78,7 @@ class AirtableApp:
         # Sleep the rest of the time needed to wait for page to load
         sleep(max(WAIT_SECS_FOR_PAGE_LOAD - (time() - self._init), 0))
         # return driver.execute_script(js_script_2)
-        return self._driver.execute_script(JS_SCRIPT_1)
+        return self._driver.execute_script(JS_SCRIPT_2)
 
     def close(self) -> None:
         self._driver.quit()
