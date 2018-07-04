@@ -59,22 +59,17 @@ _.get(item, 'foreignTable.id')))
 
 class AirtableApp:
     def __init__(self, app_id, username, password) -> None:
-        self.app_id = app_id
-        self.username = username
-        self.password = password
         driver = self._driver = webdriver.Remote(
             command_executor="http://127.0.0.1:4444/wd/hub",
             desired_capabilities=DesiredCapabilities.FIREFOX,
         )
-        self._sess_id = driver.session_id
-
         driver.get("https://airtable.com/" + app_id + "/api/docs")
 
         user_field = driver.find_element_by_name("email")
         password_field = driver.find_element_by_name("password")
 
-        user_field.send_keys(AIRTABLE_USER_ID)
-        password_field.send_keys(AIRTABLE_PASSWORD)
+        user_field.send_keys(username)
+        password_field.send_keys(password)
         password_field.submit()
         self._init = time()
 
