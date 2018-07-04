@@ -7,6 +7,7 @@ authors = ["David Buckley <buckley.w.david@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.6"
 click = "^6.7"
+selenium = "^3.13"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"

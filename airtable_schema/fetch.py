@@ -1,17 +1,16 @@
-from selenium import webdriver
 from pprint import pprint
 from sys import version_info
 from time import sleep
+from time import time
+import typing
 
-# NOTE: it's a security risk to put login info in a plain text file. take appropriate precautions to protect/secure your data.
-AIRTABLE_APP_ID = "app012345abcdef"
-AIRTABLE_USER_ID = "userID@example.com"
-AIRTABLE_PASSWORD = "mySecretPW"
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 WAIT_SECS_FOR_PAGE_LOAD = 15  # set higher/lower as needed for a slow webpage load
 
 # from Chester_McLaughlin
-js_script_1 = """
+JS_SCRIPT_1 = """
 var myAT = {
 id:window.application.id,
 name:window.application.name,
@@ -47,7 +46,7 @@ return (myAT);
 """
 
 # from Kai_Curry
-js_script_2 = """
+JS_SCRIPT_2 = """
 return (JSON.stringify( _.mapValues(application.tablesById,
 table => .set(.omit(table, ['sampleRows']),
 'columns',
@@ -57,47 +56,40 @@ _.get(item, 'foreignTable.id')))
 ))))
 """
 
-print(
-    "\nUsing: Python v"
-    + f"{version_info.major}.{version_info.minor}.{version_info.micro} / ",
-    end="",
-)
-print("Selenium v" + webdriver.version)
 
-opts = webdriver.FirefoxOptions()
-opts.set_headless(False)
-driver = webdriver.Firefox(firefox_options=opts)
-sess_id = driver.session_id
+class AirtableApp:
+    def __init__(self, app_id, username, password) -> None:
+        self.app_id = app_id
+        self.username = username
+        self.password = password
+        driver = self._driver = webdriver.Remote(
+            command_executor="http://127.0.0.1:4444/wd/hub",
+            desired_capabilities=DesiredCapabilities.FIREFOX,
+        )
+        self._sess_id = driver.session_id
 
-print(
-    "WebDriver version: "
-    + driver.capabilities["browserName"]
-    + " v"
-    + driver.capabilities["browserVersion"]
-    + "\n"
-)
+        driver.get("https://airtable.com/" + app_id + "/api/docs")
 
-driver.get("https://airtable.com/" + AIRTABLE_APP_ID + "/api/docs")
+        user_field = driver.find_element_by_name("email")
+        password_field = driver.find_element_by_name("password")
 
-userID_field = driver.find_element_by_name("email")
-passwd_field = driver.find_element_by_name("password")
+        user_field.send_keys(AIRTABLE_USER_ID)
+        password_field.send_keys(AIRTABLE_PASSWORD)
+        password_field.submit()
+        self._init = time()
 
-userID_field.send_keys(AIRTABLE_USER_ID)
-passwd_field.send_keys(AIRTABLE_PASSWORD)
-passwd_field.submit()
+    @property
+    def schema(self) -> typing.Dict:
+        # Sleep the rest of the time needed to wait for page to load
+        sleep(max(WAIT_SECS_FOR_PAGE_LOAD - (time() - self._init), 0))
+        # return driver.execute_script(js_script_2)
+        return self._driver.execute_script(JS_SCRIPT_1)
 
-print("Pausing for Airtable API page to load…")
-sleep(WAIT_SECS_FOR_PAGE_LOAD)
+    def close(self) -> None:
+        self._driver.quit()
 
-schema_dict_1 = driver.execute_script(js_script_1)
-schema_dict_2 = driver.execute_script(js_script_2)
+    def __enter__(self) -> 'AirtableApp':
+        return self
 
-print("\n=== Script results 1: ======================\n")
-pprint(schema_dict_1)
-
-print("\n=== Script results 2: ======================\n")
-pprint(schema_dict_2)
-
-driver.quit()
-
-print("\n=== Done ==================================\n")
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        self.close()
