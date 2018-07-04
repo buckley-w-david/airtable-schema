@@ -8,6 +8,8 @@ services:
      - "4444:4444"
   airtable:
     build: .
+    depends_on:
+      - "selenium"
     environment:
     - AIRTABLE_USER=buckley.w.david@gmail.com
     - AIRTABLE_PASSWORD=##########
