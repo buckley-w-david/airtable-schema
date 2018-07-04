@@ -53,7 +53,7 @@ def fetch_schema(
     delay = WAIT_SECS_FOR_PAGE_LOAD  # seconds
     try:
         WebDriverWait(driver, delay).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.fields'))
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".fields"))
         )
     except TimeoutException:
         raise

@@ -6,3 +6,4 @@ WORKDIR /opt/airtable
 RUN ["pip", "install", "poetry"]
 RUN ["poetry", "config", "settings.virtualenvs.create", "false"]
 RUN ["poetry", "dev"]
+ENTRYPOINT ["airtable", "schema"]

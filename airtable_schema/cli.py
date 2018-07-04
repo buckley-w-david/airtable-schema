@@ -9,11 +9,17 @@ from airtable_schema import fetch
 
 
 @click.group()
-@click.option("--username", required=True, help="Airtable Username")
-@click.option("--password", help="Airtable Password")
-@click.option("--stdin-password", is_flag=True, default=False, help="read password in from stdin")
+@click.option(
+    "--username", required=True, envvar="AIRTABLE_USER", help="Airtable username"
+)
+@click.option("--password", envvar="AIRTABLE_PASSWORD", help="Airtable password")
+@click.option(
+    "--stdin-password", is_flag=True, default=False, help="Read password in from stdin"
+)
 @click.pass_context
-def main(ctx: click.core.Context, username: str, password: str, stdin_password: bool) -> None:
+def main(
+    ctx: click.core.Context, username: str, password: str, stdin_password: bool
+) -> None:
     if not (password or stdin_password):
         raise click.UsageError("Must supply one of `password` or `stdin_password`")
 
@@ -23,9 +29,19 @@ def main(ctx: click.core.Context, username: str, password: str, stdin_password: 
 
 
 @main.command()
-@click.option("--app-id", required=True, help="App ID for table")
-@click.option("--remote-driver/--no-remove-driver", default=True)
-@click.option("--remote-driver-address", default="http://127.0.0.1:4444/wd/hub")
+@click.option("--app-id", required=True, envvar="APP_ID", help="App ID for workspace")
+@click.option(
+    "--remote-driver/--no-remove-driver",
+    envvar="REMOTE_DRIVER",
+    default=True,
+    help="Flag to signal to use a remote selenium host",
+)
+@click.option(
+    "--remote-driver-address",
+    envvar="REMOTE_DRIVER_HOST",
+    default="http://127.0.0.1:4444/wd/hub",
+    help="Remote selenium host",
+)
 @click.pass_context
 def schema(
     ctx: click.core.Context,
