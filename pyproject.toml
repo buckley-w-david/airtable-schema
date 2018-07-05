@@ -1,8 +1,13 @@
 [tool.poetry]
 name = "airtable-schema"
-version = "0.1.0"
-description = ""
+version = "0.1.1"
+description = "Schema management for Airtable"
 authors = ["David Buckley <buckley.w.david@gmail.com>"]
+license = "MIT"
+
+readme = 'README.md'
+repository = "https://github.com/buckley-w-david/airtable-schema"
+homepage = "https://github.com/buckley-w-david/airtable-schema"
 
 [tool.poetry.dependencies]
 python = "^3.6"
