@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "airtable-schema"
-version = "0.1.1"
+version = "0.2.0"
 description = "Schema management for Airtable"
 authors = ["David Buckley <buckley.w.david@gmail.com>"]
 license = "MIT"
@@ -12,7 +12,12 @@ homepage = "https://github.com/buckley-w-david/airtable-schema"
 [tool.poetry.dependencies]
 python = "^3.6"
 click = "^6.7"
-selenium = "^3.13"
+
+# To automatically pull the schema from Airtable
+selenium = { version = "^3.13", optional = true }
+
+[tool.poetry.extras]
+selenium = ["selenium"]
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
@@ -21,6 +26,7 @@ pytest-cov = "^2.5"
 pylint = "^1.9"
 black = "^18.3-alpha.0"
 pre-commit = "^1.10"
+
 
 [tool.poetry.scripts]
 airtable = 'airtable_schema.cli:main'

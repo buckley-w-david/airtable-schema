@@ -1,7 +1,8 @@
-import logging
+try:
+    import selenium
+except ImportError as exc:
+    raise ImportError('Please install the optional "selenium" extra dependencies')
 
-import selenium
-from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By

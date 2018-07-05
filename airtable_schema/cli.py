@@ -1,11 +1,5 @@
-import json
-
 import click
-from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
 from airtable_schema import AirtableCredentials
-from airtable_schema import fetch
 
 
 @click.group()
@@ -35,6 +29,13 @@ def main(
 )
 @click.pass_context
 def schema(ctx: click.core.Context, app_id: str, remote_driver_address: str) -> None:
+    try:
+        from selenium import webdriver
+        from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+        from airtable_schema import fetch
+    except ImportError as exc:
+        raise ImportError('Please install the optional "selenium" extra dependencies')
+
     if remote_driver_address:
         driver = webdriver.Remote(
             command_executor=remote_driver_address,
