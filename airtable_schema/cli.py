@@ -31,9 +31,7 @@ def main(
 @main.command()
 @click.option("--app-id", required=True, envvar="APP_ID", help="App ID for workspace")
 @click.option(
-    "--remote-driver-address",
-    envvar="REMOTE_DRIVER_HOST",
-    help="Remote selenium host",
+    "--remote-driver-address", envvar="REMOTE_DRIVER_HOST", help="Remote selenium host"
 )
 @click.pass_context
 def schema(ctx: click.core.Context, app_id: str, remote_driver_address: str) -> None:

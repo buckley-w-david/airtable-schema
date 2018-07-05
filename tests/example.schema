@@ -1,0 +1,65 @@
+{
+	"tblarQuh3cAiHvwX9": {
+		"id": "tblarQuh3cAiHvwX9",
+		"name": "data-table",
+		"columns": [{
+			"id": "fld4iwaQPKPHEc2FB",
+			"name": "Name",
+			"type": "text",
+			"typeOptions": null,
+			"$$hashKey": "object:22"
+		}, {
+			"id": "flddeVpf2k0wVEnwE",
+			"name": "DField1",
+			"type": "text",
+			"typeOptions": null,
+			"$$hashKey": "object:23"
+		}, {
+			"id": "fldb3LAeTrkbYy5nd",
+			"name": "DField2",
+			"type": "text",
+			"typeOptions": null,
+			"$$hashKey": "object:24"
+		}],
+		"primaryColumnName": "Name",
+		"defaultView": {
+			"id": "viw5SA0sJ9hivFQkK",
+			"name": "Grid view"
+		},
+		"isEmptyDueToFilter": false,
+		"isEmpty": false,
+		"nameForUrl": "data-table",
+		"$$hashKey": "object:3",
+		"numRecordsToList": 3
+	},
+	"tblnszfv9OPzTv6Xa": {
+		"id": "tblnszfv9OPzTv6Xa",
+		"name": "data-table-2",
+		"columns": [{
+			"id": "fldj8D6dkNf7Wonaw",
+			"name": "Name",
+			"type": "text",
+			"$$hashKey": "object:78"
+		}, {
+			"id": "fldwbcaMKuInUedlu",
+			"name": "Notes",
+			"type": "multilineText",
+			"$$hashKey": "object:79"
+		}, {
+			"id": "fldS5ewlaJceYAk7P",
+			"name": "Attachments",
+			"type": "multipleAttachment",
+			"$$hashKey": "object:80"
+		}],
+		"primaryColumnName": "Name",
+		"defaultView": {
+			"id": "viwiszZZ3nA1f5YK8",
+			"name": "Grid view"
+		},
+		"isEmptyDueToFilter": false,
+		"isEmpty": false,
+		"nameForUrl": "data-table-2",
+		"$$hashKey": "object:4",
+		"numRecordsToList": 3
+	}
+}
